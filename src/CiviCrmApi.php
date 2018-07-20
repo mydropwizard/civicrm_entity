@@ -4,6 +4,9 @@ namespace Drupal\civicrm_entity;
 
 use Drupal\civicrm\Civicrm;
 
+/**
+ * CiviCRM API implementation.
+ */
 class CiviCrmApi implements CiviCrmApiInterface {
 
   /**
@@ -39,6 +42,11 @@ class CiviCrmApi implements CiviCrmApiInterface {
     $this->initialize();
     $result = civicrm_api3($entity, 'delete', $params);
     return $result['values'];
+  }
+
+  public function validate($entity, $params) {
+    $this->initialize();
+    return _civicrm_api3_validate($entity, 'create', $params);
   }
 
   /**
