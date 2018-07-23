@@ -10,6 +10,7 @@ use Drupal\civicrm_entity\CivicrmEntityListBuilder;
 use Drupal\civicrm_entity\CivicrmEntityViewsData;
 use Drupal\civicrm_entity\CiviEntityStorage;
 use Drupal\civicrm_entity\Entity\CivicrmEntity;
+use Drupal\civicrm_entity\Entity\Sql\CivicrmEntityStorageSchema;
 use Drupal\civicrm_entity\Form\CivicrmEntityForm;
 use Drupal\civicrm_entity\Routing\CiviCrmEntityRouteProvider;
 use Drupal\civicrm_entity\SupportedEntities;
@@ -65,6 +66,7 @@ function civicrm_entity_entity_type_build(array &$entity_types) {
         'id' => 'id',
         'label' => $civicrm_entity_info['label property'],
       ],
+      'base_table' => $entity_type_id,
       'admin_permission' => 'administer civicrm entity',
       'permission_granularity' => 'entity_type',
       'handlers' => [
@@ -81,6 +83,7 @@ function civicrm_entity_entity_type_build(array &$entity_types) {
           'delete' => ContentEntityDeleteForm::class,
         ],
         'views_data' => CivicrmEntityViewsData::class,
+        'storage_schema' => CivicrmEntityStorageSchema::class,
       ],
       // Generate route paths.
       'links' => [
@@ -113,7 +116,7 @@ function civicrm_entity_entity_type_build(array &$entity_types) {
 function civicrm_entity_pseudoconstant_options(FieldStorageDefinitionInterface $definition, FieldableEntityInterface $entity = NULL, &$cacheable = NULL) {
   /** @var \Drupal\civicrm_entity\CiviCrmApiInterface $civicrm_api */
   $civicrm_api = \Drupal::service('civicrm_entity.api');
-  $entity_type = $entity->getEntityType();
+  $entity_type = \Drupal::entityTypeManager()->getDefinition($definition->getTargetEntityTypeId());
   $options = $civicrm_api->getOptions($entity_type->get('civicrm_entity'), $definition->getName());
   return $options;
 }

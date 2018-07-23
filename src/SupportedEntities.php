@@ -33,7 +33,6 @@ final class SupportedEntities {
       'label property' => 'name',
       'permissions' => [
         'view' => [],
-        'edit' => [],
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -50,7 +49,7 @@ final class SupportedEntities {
       'label property' => 'subject',
       'permissions' => [
         'view' => ['view all activities'],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => ['delete activities'],
@@ -81,7 +80,7 @@ final class SupportedEntities {
       'label property' => 'title',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -122,6 +121,10 @@ final class SupportedEntities {
       'required' => [
         'contact_type' => TRUE,
         'name' => TRUE,
+        'first_name' => TRUE,
+        'last_name' => TRUE,
+        'email' => TRUE,
+        'display_name' => TRUE,
       ],
     ];
     $civicrm_entity_info['civicrm_contribution'] = [
@@ -174,7 +177,7 @@ final class SupportedEntities {
       'label property' => 'name',
       'permissions' => [
         'view' => ['view all contacts'],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -198,7 +201,7 @@ final class SupportedEntities {
       'label property' => 'tag_id',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -210,7 +213,7 @@ final class SupportedEntities {
       'label property' => 'id',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -222,7 +225,7 @@ final class SupportedEntities {
       'label property' => 'name',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -234,7 +237,7 @@ final class SupportedEntities {
       'label property' => 'id',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -383,7 +386,7 @@ final class SupportedEntities {
       'label property' => 'subject',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -479,7 +482,7 @@ final class SupportedEntities {
       'label property' => 'id',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -491,7 +494,7 @@ final class SupportedEntities {
       'label property' => 'id',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -503,7 +506,7 @@ final class SupportedEntities {
       'label property' => 'id',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -515,7 +518,7 @@ final class SupportedEntities {
       'label property' => 'id',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -527,7 +530,7 @@ final class SupportedEntities {
       'label property' => 'id',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -587,7 +590,7 @@ final class SupportedEntities {
       'label property' => 'label',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
@@ -599,7 +602,7 @@ final class SupportedEntities {
       'label property' => 'title',
       'permissions' => [
         'view' => [],
-        'edit' => [],
+
         'update' => [],
         'create' => [],
         'delete' => [],
