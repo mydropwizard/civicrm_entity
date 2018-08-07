@@ -1,15 +1,17 @@
 <?php
 
-namespace Drupal\Tests\civicrim_entity\Kernel;
-
-use Drupal\KernelTests\KernelTestBase;
+namespace Drupal\Tests\civicrm_entity\Kernel;
 
 /**
- * Tests entity definition
+ * Tests entity definition.
  *
  * @group civicrim_entity
  */
-class CivicrmEntityTypeTest extends KernelTestBase {
+class CivicrmEntityTypeTest extends CivicrmEntityTestBase {
+
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = [
     'civicrm',
     'civicrm_entity',
@@ -19,11 +21,9 @@ class CivicrmEntityTypeTest extends KernelTestBase {
     'link',
   ];
 
-  protected function setUp() {
-    parent::setUp();
-    require __DIR__ . '/../Type.php';
-  }
-
+  /**
+   * Tests the generated entity type.
+   */
   public function testEntityType() {
     $definition = $this->container->get('entity_type.manager')->getDefinition('civicrm_event');
 
@@ -33,7 +33,7 @@ class CivicrmEntityTypeTest extends KernelTestBase {
 
     $links = $definition->getLinkTemplates();
     $this->assertEquals('/civicrm-event/{civicrm_event}', $links['canonical']);
-    $this->assertEquals('/admin/structure/civicrm-entity/civicrm-event/{civicrm_event}/edit', $links['edit-form']);
+    $this->assertEquals('/civicrm-event/{civicrm_event}/edit', $links['edit-form']);
     $this->assertEquals('/admin/structure/civicrm-entity/civicrm-event', $links['collection']);
   }
 
