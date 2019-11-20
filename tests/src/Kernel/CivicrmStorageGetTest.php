@@ -11,16 +11,6 @@ use Drupal\civicrm_entity\Entity\CivicrmEntity;
  */
 class CivicrmStorageGetTest extends CivicrmEntityTestBase {
 
-  protected static $modules = [
-    'civicrm',
-    'civicrm_entity',
-    'field',
-    'text',
-    'options',
-    'link',
-    'datetime',
-  ];
-
   /**
    * Tests getting a single entity.
    */
@@ -40,7 +30,7 @@ class CivicrmStorageGetTest extends CivicrmEntityTestBase {
     $this->assertInstanceOf(CivicrmEntity::class, $entity);
     $this->assertEquals($entity->id(), 1);
     $this->assertEquals($entity->get('title')->value, 'Fall Fundraiser Dinner');
-    $this->assertEquals('2018-05-02T17:00:00', $entity->get('start_date')->value);
+    $this->assertEquals('2018-05-02T07:00:00', $entity->get('start_date')->value);
     $this->assertEquals('2018/05/02', $entity->get('start_date')->date->format('Y/m/d'));
     $this->assertTrue($entity->get('is_public')->value);
   }
