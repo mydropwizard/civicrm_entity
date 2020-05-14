@@ -2,55 +2,15 @@
 
 namespace Drupal\civicrm_entity;
 
-use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Extension\ModuleHandlerInterface;
+
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\views\EntityViewsData;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CivicrmEntityViewsData extends EntityViewsData {
 
   use StringTranslationTrait;
-
-  /**
-   * Constructs an EntityViewsData object.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The entity type to provide views integration for.
-   * @param \Drupal\civicrm_entity\CiviEntityStorage $storage_controller
-   *   The storage handler used for this entity type.
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
-   *   The entity manager.
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
-   *   The module handler.
-   * @param \Drupal\Core\StringTranslation\TranslationInterface $translation_manager
-   *   The translation manager.
-   */
-  public function __construct(EntityTypeInterface $entity_type, CiviEntityStorage $storage_controller, EntityManagerInterface $entity_manager, ModuleHandlerInterface $module_handler, TranslationInterface $translation_manager) {
-    $this->entityType = $entity_type;
-    $this->entityManager = $entity_manager;
-    $this->storage = $storage_controller;
-    $this->moduleHandler = $module_handler;
-    $this->setStringTranslation($translation_manager);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
-    return new static(
-      $entity_type,
-      $container->get('entity.manager')->getStorage($entity_type->id()),
-      $container->get('entity.manager'),
-      $container->get('module_handler'),
-      $container->get('string_translation'),
-      $container->get('typed_data_manager')
-    );
-  }
-
 
   public function getViewsData() {
     $data = [];
@@ -125,10 +85,10 @@ class CivicrmEntityViewsData extends EntityViewsData {
               '@entity' => $this->entityType->getLabel(),
             ];
             $data[$target_base_table][$pseudo_field_name]['relationship'] = [
-              'title' => t('@entity using @field_name', $args),
-              'label' => t('@field_name', ['@field_name' => $field_name]),
+              'title' => $this->t('@entity using @field_name', $args),
+              'label' => $this->t('@field_name', ['@field_name' => $field_name]),
               'group' => $target_entity_type->getLabel(),
-              'help' => t('Relate each @entity with a @field_name set to the @label.', $args),
+              'help' => $this->t('Relate each @entity with a @field_name set to the @label.', $args),
               'id' => 'civicrm_entity_reverse',
               'base' => $this->entityType->getDataTable() ?: $this->entityType->getBaseTable(),
               'entity_type' => $this->entityType->id(),
@@ -211,14 +171,31 @@ class CivicrmEntityViewsData extends EntityViewsData {
   protected function processViewsDataForListString($table, FieldDefinitionInterface $field_definition, array &$views_field, $field_column_name) {
     $views_field['filter']['id'] = 'list_field';
     $views_field['filter']['field_name'] = $field_definition->getName();
+    $views_field['argument']['id'] = 'string_list_field';
+    $views_field['argument']['field_name'] = $field_definition->getName();
+  }
 
-    // Set the 'datetime' argument type.
-    if ($field_definition->getName() == 'list_string') {
-      $views_field['argument']['id'] = 'string_list_field';
-    }
-    else {
-      $views_field['argument']['id'] = 'number_list_field';
-    }
+  /**
+   * Provides Views integration for list_integer fields.
+   *
+   * This does not provide arguments, as that required an alter against the
+   * entire Views data array, which is not possible here.
+   *
+   * @param string $table
+   *   The table the language field is added to.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The field definition.
+   * @param array $views_field
+   *   The views field data.
+   * @param string $field_column_name
+   *   The field column being processed.
+   *
+   * @see options_field_views_data()
+   */
+  protected function processViewsDataForListInteger($table, FieldDefinitionInterface $field_definition, array &$views_field, $field_column_name) {
+    $views_field['filter']['id'] = 'list_field';
+    $views_field['filter']['field_name'] = $field_definition->getName();
+    $views_field['argument']['id'] = 'number_list_field';
     $views_field['argument']['field_name'] = $field_definition->getName();
   }
 
